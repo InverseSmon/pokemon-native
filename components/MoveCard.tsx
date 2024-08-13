@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
-import { FindTypeImage } from "@/components/FindTypeImage";
-
+import { capitalizeFirstLetter } from "@/components/PokemonInfo";
 const types = [
     {
         type: "normal",
@@ -94,10 +93,6 @@ const types = [
         imgSrc: require("@/assets/images/fairy.png"),
     },
 ];
-
-function capitalizeFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
 
 export const MoveCard = ({
     name,

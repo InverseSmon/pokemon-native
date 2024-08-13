@@ -11,7 +11,7 @@ function weightToKilograms(weight: number) {
     return weight / 10;
 }
 
-function capitalizeFirstLetter(string: string) {
+export function capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 

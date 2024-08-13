@@ -21,6 +21,11 @@ export default function ChooseView() {
                 title="Moves"
                 underline={currentView === "moves"}
             />
+            <GenButton
+                onPress={() => dispatch(setView("evolution"))}
+                title="Evolution"
+                underline={currentView === "evolution"}
+            />
         </View>
     );
 }

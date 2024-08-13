@@ -83,6 +83,17 @@ const VersionDropdown = () => {
         ],
     };
 
+    const findTitleByVersion = (version: string) => {
+        for (let key in versions) {
+            for (let item of versions[key]) {
+                if (item.version === version) {
+                    return item.title;
+                }
+            }
+        }
+        return "";
+    };
+
     const [gameVersion, setGameVersion] = useState("");
     const [isFocus, setIsFocus] = useState(false);
 
@@ -122,8 +133,7 @@ const VersionDropdown = () => {
                 labelField={"title"}
                 valueField={"version"}
                 onChange={(item) => setGameVersion(item.version)}
-                // placeholder={!isFocus ? "Select item" : "..."}
-                placeholder={currentVersion}
+                placeholder={findTitleByVersion(currentVersion)}
             />
         </>
     );

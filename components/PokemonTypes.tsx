@@ -2,10 +2,7 @@ import React from "react";
 import { Image, StyleSheet } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { FindTypeImage } from "@/components/FindTypeImage";
-
-function capitalizeFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
+import { capitalizeFirstLetter } from "@/components/PokemonInfo";
 
 export default function PokemonTypes({ data }: { data: any }) {
     return (

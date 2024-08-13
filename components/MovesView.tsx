@@ -4,7 +4,6 @@ import { ThemedView } from "@/components/ThemedView";
 import { GenerationDropdown } from "@/components/GenerationButtons";
 import { VersionButtons } from "@/components/VersionButtons";
 import VersionMoves, { populateMovesLists } from "@/components/MovesSort";
-// import { View } from "react-native-reanimated/lib/typescript/Animated";
 
 export type PokemonMove = {
     move: {

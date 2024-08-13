@@ -8,6 +8,7 @@ import PokemonInfo, { PokemonNameTypes } from "@/components/PokemonInfo";
 import Moves from "@/components/MovesView";
 import { ThemedView } from "@/components/ThemedView";
 import ChooseView from "@/components/ChooseView";
+import { EvolutionChainView } from "@/components/EvolutionChainView";
 
 export default function PokemonHomeScreen() {
     const data = useAppSelector((state: RootState) => state.pokemon.pokemon);
@@ -53,6 +54,8 @@ export default function PokemonHomeScreen() {
                         <PokemonInfo data={data} />
                     ) : view === "moves" ? (
                         <Moves data={data.moves} />
+                    ) : view === "evolution" ? (
+                        <EvolutionChainView data={data?.name} />
                     ) : null}
                 </ThemedView>
             ) : null}
