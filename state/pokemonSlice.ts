@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PokemonMove } from "@/components/MovesView";
 
-type PokemonData = {
+export type PokemonData = {
     id: number;
     name: string;
     height: number;
