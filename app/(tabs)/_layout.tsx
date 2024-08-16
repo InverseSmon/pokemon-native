@@ -1,12 +1,12 @@
 import { Tabs } from "expo-router";
 import React from "react";
-
 import {
     TabBarIcon,
     PokemonTabBarIcon,
 } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function TabLayout() {
     const colorScheme = useColorScheme();
@@ -40,7 +40,7 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="explore"
+                name="team"
                 options={{
                     title: "Team Builder",
                     tabBarIcon: ({ color, focused }) => (

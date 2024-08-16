@@ -29,12 +29,8 @@ const MovesView: React.FC<MovesProps> = ({ data }) => {
 
     return (
         <ThemedView>
-            {/* <GenerationButtons /> */}
             <GenerationDropdown />
-            {/* <VersionButtons /> */}
-            {/* <ScrollView> */}
             <VersionMoves versionMap={versionMap} />
-            {/* </ScrollView> */}
         </ThemedView>
     );
 };

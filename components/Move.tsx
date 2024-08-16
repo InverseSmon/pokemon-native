@@ -53,7 +53,6 @@ const Move: React.FC<MoveProps> = ({ moveRawData }) => {
             accuracy={move.accuracy}
             pp={move.pp}
             type={move.type.name}
-            // method={moveRawData.method}
         />
     ) : null;
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "expo-router";
 import {
     TouchableOpacity,
     Text,
@@ -60,8 +61,6 @@ export const VersionButton = ({
             backgroundColor: backgroundColour,
             padding: 5,
             borderRadius: 5,
-            // borderWidth: 1,
-            // borderColor: "#000000",
             margin: 5,
         },
         text1: {
@@ -118,5 +117,31 @@ export const FindButton = ({
                 <Text style={styles.text}>{title}</Text>
             </TouchableOpacity>
         </View>
+    );
+};
+
+export const TeamButton = ({ title }: { title: string }) => {
+    const styles = StyleSheet.create({
+        button: {
+            backgroundColor: "white",
+            padding: 5,
+            margin: 5,
+            borderRadius: 5,
+            width: "100%",
+            height: "100%",
+        },
+        text: {
+            textAlign: "center",
+            fontSize: 100,
+            color: "blue",
+        },
+    });
+
+    return (
+        <TouchableOpacity style={styles.button}>
+            <Link style={styles.text} href="/pokemon">
+                {title}
+            </Link>
+        </TouchableOpacity>
     );
 };

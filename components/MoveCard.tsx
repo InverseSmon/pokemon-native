@@ -114,9 +114,9 @@ export const MoveCard = ({
             backgroundColor: types.find((t) => t.type === type)?.color,
             padding: 5,
             margin: 5,
-            marginBottom: 0,
+            // marginBottom: 0,
             borderRadius: 15,
-            // borderBottomWidth: 2,
+            width: "80%",
         },
         name: {
             textAlign: "center",

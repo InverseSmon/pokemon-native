@@ -126,16 +126,17 @@ const VersionMoves: React.FC<VersionMovesProps> = ({ versionMap }) => {
                         underline={learnStyle === "egg"}
                     />
                 </View>
-                <ScrollView>
+                {/* <ScrollView style={styles.movesView}> */}
+                <View style={styles.movesView}>
                     {learnStyle === "level-up"
                         ? moveList["level-up"].map((move, index) => (
                               //   <View style={styles.levelView}>
-                              <>
+                              <View style={styles.levelUp}>
                                   <Text style={styles.level}>
                                       L{move.level}
                                   </Text>
                                   <Move key={index} moveRawData={move.name} />
-                              </>
+                              </View>
                               //  </View>
                           ))
                         : learnStyle === "machine"
@@ -145,7 +146,7 @@ const VersionMoves: React.FC<VersionMovesProps> = ({ versionMap }) => {
                         : moveList.egg.map((move, index) => (
                               <Move key={index} moveRawData={move.name} />
                           ))}
-                </ScrollView>
+                </View>
             </View>
         );
     } else {
@@ -162,7 +163,17 @@ const styles = StyleSheet.create({
     level: {
         textAlign: "center",
         fontSize: 20,
-        marginTop: 15,
+        marginTop: 25,
+        width: "15%",
+    },
+    levelUp: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        // margin: 5,
+    },
+    movesView: {
+        justifyContent: "center",
+        alignItems: "center",
     },
 });
 
