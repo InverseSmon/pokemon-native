@@ -1,10 +1,5 @@
-import React, { useMemo, useEffect } from "react";
-import { StyleSheet, ScrollView, Text } from "react-native";
+import React, { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/state/hooks";
-import { ThemedView } from "@/components/ThemedView";
-import { GenerationDropdown } from "@/components/GenerationButtons";
-import { VersionButtons } from "@/components/VersionButtons";
-import VersionMoves, { populateMovesLists } from "@/components/MovesSort";
 import { setSpeciesData, setEvolutionChain } from "@/state/evolutionSlice";
 import { FormatEvolutionChain } from "@/components/FormatEvolutionChain";
 

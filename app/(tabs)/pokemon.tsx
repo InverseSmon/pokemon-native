@@ -1,6 +1,6 @@
 import { RootState } from "@/state/store";
 import { useAppSelector } from "@/state/hooks";
-import { Image, StyleSheet, Dimensions } from "react-native";
+import { View, Image, StyleSheet, Dimensions } from "react-native";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import FindPokemon from "@/components/FindPokemon";
@@ -49,14 +49,17 @@ export default function PokemonHomeScreen() {
                 <ThemedView style={styles.stepContainer}>
                     <PokemonNameTypes data={data} />
                     <ChooseView />
-
-                    {view === "stats" ? (
+                    <View style={view === "stats" ? styles.flex : styles.none}>
                         <PokemonInfo data={data} />
-                    ) : view === "moves" ? (
+                    </View>
+                    <View style={view === "moves" ? styles.flex : styles.none}>
                         <Moves data={data.moves} />
-                    ) : view === "evolution" ? (
+                    </View>
+                    <View
+                        style={view === "evolution" ? styles.flex : styles.none}
+                    >
                         <EvolutionChainView data={data?.name} />
-                    ) : null}
+                    </View>
                 </ThemedView>
             ) : null}
         </ParallaxScrollView>
@@ -94,5 +97,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         textAlign: "center",
+    },
+    flex: {
+        display: "flex",
+    },
+    none: {
+        display: "none",
     },
 });

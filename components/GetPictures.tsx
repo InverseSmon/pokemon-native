@@ -16,6 +16,7 @@ export const GetPokemonPicture: React.FC<GetPokemonPictureProps> = ({
         pokemonImage: {
             width: pictureSize,
             height: pictureSize,
+            alignSelf: "center",
         },
     });
 
