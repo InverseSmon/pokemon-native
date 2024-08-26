@@ -46,7 +46,6 @@ export const EvolutionChainView: React.FC<EvolutionChainViewProps> = ({
             })
             .then((json) => {
                 dispatch(setEvolutionChain(json));
-                console.log(evolutionChain);
             })
             .catch((error) => console.error(error));
     }, [speciesData]);

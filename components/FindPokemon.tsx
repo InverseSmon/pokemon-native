@@ -54,10 +54,6 @@ export default function FindPokemon() {
 
     return (
         <>
-            {/* <ThemedView style={styles.titleContainer}>
-                <ThemedText type="title">Find Pokemon</ThemedText>
-            </ThemedView> */}
-
             <View style={styles.submitView}>
                 {searchByName ? (
                     <View>

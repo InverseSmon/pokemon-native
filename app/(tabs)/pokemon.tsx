@@ -53,7 +53,7 @@ export default function PokemonHomeScreen() {
                         <PokemonInfo data={data} />
                     </View>
                     <View style={view === "moves" ? styles.flex : styles.none}>
-                        <Moves data={data.moves} />
+                        <Moves data={data.moves} id={data.id} />
                     </View>
                     <View
                         style={view === "evolution" ? styles.flex : styles.none}

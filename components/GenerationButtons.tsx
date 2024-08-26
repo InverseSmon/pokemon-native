@@ -182,7 +182,6 @@ export const GenerationDropdown: React.FC = () => {
                     styles.dropdownPicker,
                     isFocus && { borderColor: "blue" },
                 ]}
-                // style={styles.dropdownPicker}
                 value={value}
                 data={values}
                 labelField={"value"}

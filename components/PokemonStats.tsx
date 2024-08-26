@@ -1,18 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-import {
-    Image,
-    StyleSheet,
-    Platform,
-    TextInput,
-    Text,
-    Button,
-    View,
-    Dimensions,
-    ImageBackground,
-} from "react-native";
-
-import { ThemedText } from "@/components/ThemedText";
+import { StyleSheet, Text, View } from "react-native";
 
 type PokemonStatsData = {
     stats: {
@@ -87,8 +74,8 @@ export default function PokemonStats({ name }: { name: string }) {
                     stat="Defense"
                     value={data?.stats[2].base_stat || 0}
                 />
-                <StatsBar stat="SpA" value={data?.stats[3].base_stat || 0} />
-                <StatsBar stat="SpD" value={data?.stats[4].base_stat || 0} />
+                <StatsBar stat="Sp Att" value={data?.stats[3].base_stat || 0} />
+                <StatsBar stat="Sp Def" value={data?.stats[4].base_stat || 0} />
                 <StatsBar stat="Speed" value={data?.stats[5].base_stat || 0} />
             </View>
         </>
@@ -112,23 +99,23 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     barDarkGreen: {
-        height: "100%",
+        height: 25,
         backgroundColor: "#1BC22F",
     },
     barGreen: {
-        height: "100%",
+        height: 25,
         backgroundColor: "#8DFF0A",
     },
     barYellow: {
-        height: "100%",
+        height: 25,
         backgroundColor: "#FAD73C",
     },
     barOrange: {
-        height: "100%",
+        height: 25,
         backgroundColor: "#F19143",
     },
     barRed: {
-        height: "100%",
+        height: 25,
         backgroundColor: "#F55536",
     },
     statsText: {

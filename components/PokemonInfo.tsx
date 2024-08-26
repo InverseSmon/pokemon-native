@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-evenly",
         textAlign: "center",
-        marginBottom: 8,
+        marginBottom: 20,
     },
     name: {
         fontSize: 30,

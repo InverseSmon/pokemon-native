@@ -64,7 +64,6 @@ const EvolutionDetails: React.FC<{ evolution: Evolution }> = ({
         : (evolutionTrigger = "Special Condition -");
 
     evolution.evolution_details.forEach((detail) => {
-        console.log(detail);
         if (detail.min_level) {
             evolutionMethodList.push(`${detail.min_level}`);
         }

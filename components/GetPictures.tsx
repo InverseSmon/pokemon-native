@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useAppDispatch } from "@/state/hooks";
+import { addPokemon } from "@/state/pokemonSlice";
+import { setView } from "@/state/viewSlice";
 
 type GetPokemonPictureProps = {
     name: string;
@@ -10,6 +13,7 @@ export const GetPokemonPicture: React.FC<GetPokemonPictureProps> = ({
     name,
     pictureSize,
 }) => {
+    const dispatch = useAppDispatch();
     const url = "https://pokeapi.co/api/v2/pokemon/" + name;
     const [imgUrl, setImgUrl] = useState<string>("");
     const styles = StyleSheet.create({
@@ -28,10 +32,37 @@ export const GetPokemonPicture: React.FC<GetPokemonPictureProps> = ({
             return response.json();
         })
         .then((json) => {
-            console.log(json.sprites.front_default);
             setImgUrl(json.sprites.front_default);
         })
         .catch((error) => console.error(error));
 
-    return <Image style={styles.pokemonImage} source={{ uri: imgUrl }} />;
+    const [value, setValue] = useState<string>("");
+
+    useEffect(() => {
+        if (!value) return;
+
+        const url = "https://pokeapi.co/api/v2/pokemon/" + value;
+        fetch(url)
+            .then((response) => {
+                if (!response.ok) {
+                    return;
+                }
+                return response.json();
+            })
+            .then((json) => {
+                dispatch(addPokemon(json));
+            })
+            .catch((error) => console.error(error));
+    }, [value, dispatch]);
+
+    const onPress = () => {
+        setValue(name);
+        dispatch(setView("stats"));
+    };
+
+    return (
+        <TouchableOpacity onPress={onPress}>
+            <Image style={styles.pokemonImage} source={{ uri: imgUrl }} />
+        </TouchableOpacity>
+    );
 };
