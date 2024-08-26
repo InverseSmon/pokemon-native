@@ -100,21 +100,18 @@ export const MoveCard = ({
     accuracy,
     pp,
     type,
-}: // method,
-{
+}: {
     name: string;
     power: number;
     accuracy: number;
     pp: number;
     type: string;
-    // method: string;
 }) => {
     const styles = StyleSheet.create({
         card: {
             backgroundColor: types.find((t) => t.type === type)?.color,
             padding: 5,
             margin: 5,
-            // marginBottom: 0,
             borderRadius: 15,
             width: "80%",
         },

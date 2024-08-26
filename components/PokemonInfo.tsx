@@ -24,7 +24,7 @@ export function splitAndCapitalize(string: string) {
 
 export function PokemonNameTypes({ data }: { data: any }) {
     return (
-        <>
+        <View style={styles.nameTypes}>
             <ThemedText type="subtitle" style={styles.name}>
                 {data?.species
                     ? capitalizeFirstLetter(data?.species.name)
@@ -32,7 +32,7 @@ export function PokemonNameTypes({ data }: { data: any }) {
                 {"#" + data?.id}
             </ThemedText>
             <PokemonTypes data={data} />
-        </>
+        </View>
     );
 }
 
@@ -72,5 +72,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         textAlign: "center",
+    },
+    nameTypes: {
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 20,
     },
 });

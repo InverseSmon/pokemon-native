@@ -15,10 +15,8 @@ export const teamSlice = createSlice({
         addPlayer: (state, action: PayloadAction<string>) => {
             state.team.push(action.payload);
         },
-        removePlayer: (state, action: PayloadAction<string>) => {
-            state.team = state.team.filter(
-                (player) => player !== action.payload
-            );
+        removePlayer: (state, action: PayloadAction<number>) => {
+            state.team.splice(action.payload, 1);
         },
     },
 });

@@ -9,6 +9,7 @@ import Moves from "@/components/MovesView";
 import { ThemedView } from "@/components/ThemedView";
 import ChooseView from "@/components/ChooseView";
 import { EvolutionChainView } from "@/components/EvolutionChainView";
+import AddPokemonToTeam from "@/components/AddPokemonToTeam";
 
 export default function PokemonHomeScreen() {
     const data = useAppSelector((state: RootState) => state.pokemon.pokemon);
@@ -47,7 +48,10 @@ export default function PokemonHomeScreen() {
             <FindPokemon />
             {data ? (
                 <ThemedView style={styles.stepContainer}>
-                    <PokemonNameTypes data={data} />
+                    <View style={styles.nameButton}>
+                        <PokemonNameTypes data={data} />
+                        <AddPokemonToTeam />
+                    </View>
                     <ChooseView />
                     <View style={view === "stats" ? styles.flex : styles.none}>
                         <PokemonInfo data={data} />
@@ -103,5 +107,9 @@ const styles = StyleSheet.create({
     },
     none: {
         display: "none",
+    },
+    nameButton: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
     },
 });

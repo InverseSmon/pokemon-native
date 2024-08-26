@@ -1,17 +1,33 @@
 import React from "react";
 import { Text, View, Linking, Button, StyleSheet } from "react-native";
-import { TeamButton } from "./StyledButton";
+import { TeamButton, RemovePokemonFromTeamButton } from "./StyledButton";
 import { GetPokemonPicture } from "./GetPictures";
+import { splitAndCapitalize } from "./PokemonInfo";
+import { useAppDispatch } from "@/state/hooks";
+import { removePlayer } from "@/state/teamSlice";
 
 interface TeamMemberCardProps {
     pokemon: string;
+    teamPosition: number;
 }
 
-export const TeamMemberCard = ({ pokemon }: TeamMemberCardProps) => {
+export const TeamMemberCard = ({
+    pokemon,
+    teamPosition,
+}: TeamMemberCardProps) => {
+    const dispatch = useAppDispatch();
+    const onPress = () => {
+        console.log("Removed " + pokemon + " from team");
+        dispatch(removePlayer(teamPosition));
+    };
+
     return (
         <View style={styles.card}>
-            <GetPokemonPicture name={pokemon} pictureSize={100} />
-            <Text>{pokemon}</Text>
+            <GetPokemonPicture name={pokemon} pictureSize={120} />
+            <Text>{splitAndCapitalize(pokemon)}</Text>
+            <View style={styles.remove}>
+                <RemovePokemonFromTeamButton onPress={onPress} />
+            </View>
         </View>
     );
 };
@@ -31,8 +47,8 @@ export const AddPokemonButton = () => {
 const styles = StyleSheet.create({
     card: {
         backgroundColor: "#fff",
-        width: "40%",
-        height: "23%",
+        width: 160,
+        height: 160,
         borderRadius: 10,
         borderWidth: 2,
         borderColor: "green",
@@ -42,8 +58,8 @@ const styles = StyleSheet.create({
     },
     addPokemonCard: {
         backgroundColor: "#fff",
-        width: "40%",
-        height: "23%",
+        width: 160,
+        height: 160,
         borderRadius: 10,
         borderWidth: 2,
         borderColor: "blue",
@@ -54,8 +70,8 @@ const styles = StyleSheet.create({
     },
     emptyCard: {
         backgroundColor: "#fff",
-        width: "40%",
-        height: "23%",
+        width: 160,
+        height: 160,
         borderRadius: 10,
         borderWidth: 2,
         borderColor: "grey",
@@ -63,5 +79,10 @@ const styles = StyleSheet.create({
     },
     cardText: {
         fontSize: 20,
+    },
+    remove: {
+        position: "absolute",
+        top: -10,
+        right: -10,
     },
 });

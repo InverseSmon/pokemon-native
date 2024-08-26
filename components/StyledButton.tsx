@@ -145,3 +145,65 @@ export const TeamButton = ({ title }: { title: string }) => {
         </TouchableOpacity>
     );
 };
+
+export const AddPokemonToTeamButton = ({
+    onPress,
+    title,
+}: {
+    onPress: () => void;
+    title: string;
+}) => {
+    const styles = StyleSheet.create({
+        button: {
+            backgroundColor: "green",
+            padding: 0,
+            marginBottom: 15,
+            borderRadius: 5,
+            width: 90,
+            height: 50,
+            alignSelf: "center",
+            justifyContent: "center",
+        },
+        text: {
+            textAlign: "center",
+            fontSize: 18,
+            color: "white",
+        },
+    });
+
+    return (
+        <TouchableOpacity onPress={onPress} style={styles.button}>
+            <Text style={styles.text}>{title}</Text>
+        </TouchableOpacity>
+    );
+};
+
+export const RemovePokemonFromTeamButton = ({
+    onPress,
+}: {
+    onPress: () => void;
+}) => {
+    const styles = StyleSheet.create({
+        button: {
+            backgroundColor: "red",
+            // padding: 0,
+            // marginBottom: 15,
+            borderRadius: 15,
+            width: 30,
+            height: 30,
+            alignSelf: "center",
+            justifyContent: "center",
+        },
+        text: {
+            textAlign: "center",
+            fontSize: 18,
+            color: "white",
+        },
+    });
+
+    return (
+        <TouchableOpacity onPress={onPress} style={styles.button}>
+            <Text style={styles.text}>X</Text>
+        </TouchableOpacity>
+    );
+};

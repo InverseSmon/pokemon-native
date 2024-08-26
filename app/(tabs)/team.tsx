@@ -13,8 +13,8 @@ export default function TeamScreen() {
     return (
         <View style={styles.container}>
             {teamLength > 0
-                ? team.map((pokemon: string) => (
-                      <TeamMemberCard pokemon={pokemon} />
+                ? team.map((pokemon: string, index: number) => (
+                      <TeamMemberCard pokemon={pokemon} teamPosition={index} />
                   ))
                 : null}
             {teamLength < 6 ? <AddPokemonButton /> : null}
