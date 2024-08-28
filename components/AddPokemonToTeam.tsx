@@ -28,7 +28,7 @@ function AddPokemonToTeam() {
         }
     };
 
-    return <AddPokemonToTeamButton onPress={onPress} title={"Add to Team +"} />;
+    return <AddPokemonToTeamButton onPress={onPress} title={"+"} />;
 }
 
 export default AddPokemonToTeam;

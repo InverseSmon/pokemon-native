@@ -1,12 +1,6 @@
 import React from "react";
 import { Link } from "expo-router";
-import {
-    TouchableOpacity,
-    Text,
-    StyleSheet,
-    Dimensions,
-    View,
-} from "react-native";
+import { TouchableOpacity, Text, StyleSheet, Image, View } from "react-native";
 
 export const GenButton = ({
     onPress,
@@ -29,6 +23,43 @@ export const GenButton = ({
             textAlign: "center",
             fontSize: 20,
             color: "#000000",
+        },
+    });
+
+    return (
+        <TouchableOpacity onPress={onPress} style={styles.button}>
+            <Text style={styles.text}>{title}</Text>
+        </TouchableOpacity>
+    );
+};
+
+export const NameNumberButton = ({
+    onPress,
+    title,
+    highlight,
+}: {
+    onPress: () => void;
+    title: string;
+    highlight: boolean;
+}) => {
+    const styles = StyleSheet.create({
+        button: {
+            // backgroundColor: highlight ? "#3396FF" : "#ffffff",
+            backgroundColor: "#ffffff",
+
+            width: 125,
+            padding: 3,
+            margin: 5,
+            marginTop: 0,
+            borderBottomWidth: highlight ? 2 : 0,
+            // borderRadius: 5,
+            borderColor: "#3396FF",
+        },
+        text: {
+            textAlign: "center",
+            fontSize: 20,
+            color: highlight ? "#3396FF" : "#000000",
+            // color: "#3396FF",
         },
     });
 
@@ -148,33 +179,42 @@ export const TeamButton = ({ title }: { title: string }) => {
 
 export const AddPokemonToTeamButton = ({
     onPress,
-    title,
 }: {
     onPress: () => void;
-    title: string;
 }) => {
     const styles = StyleSheet.create({
+        buttonView: {
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
+            top: 160,
+            right: 20,
+            zIndex: 10,
+        },
         button: {
-            backgroundColor: "green",
-            padding: 0,
-            marginBottom: 15,
-            borderRadius: 5,
-            width: 90,
-            height: 50,
-            alignSelf: "center",
+            alignItems: "center",
             justifyContent: "center",
         },
-        text: {
-            textAlign: "center",
-            fontSize: 18,
+        plus: {
+            width: 30,
+            height: 30,
+            borderRadius: 20,
             color: "white",
+            backgroundColor: "green",
         },
     });
 
     return (
-        <TouchableOpacity onPress={onPress} style={styles.button}>
-            <Text style={styles.text}>{title}</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonView}>
+            <TouchableOpacity onPress={onPress} style={styles.button}>
+                <Image
+                    source={require("@/assets/images/add.png")}
+                    style={styles.plus}
+                />
+                <Text>Add to team</Text>
+            </TouchableOpacity>
+        </View>
     );
 };
 
@@ -186,24 +226,67 @@ export const RemovePokemonFromTeamButton = ({
     const styles = StyleSheet.create({
         button: {
             backgroundColor: "red",
-            // padding: 0,
-            // marginBottom: 15,
             borderRadius: 15,
             width: 30,
             height: 30,
             alignSelf: "center",
             justifyContent: "center",
         },
-        text: {
-            textAlign: "center",
-            fontSize: 18,
-            color: "white",
+    });
+
+    return (
+        <TouchableOpacity onPress={onPress}>
+            <Image
+                source={require("@/assets/images/close.png")}
+                style={styles.button}
+            />
+        </TouchableOpacity>
+    );
+};
+
+export const PreviousNextButton = ({
+    onPress,
+    previous,
+}: {
+    onPress: () => void;
+    previous: boolean;
+}) => {
+    const styles = StyleSheet.create({
+        button: {
+            backgroundColor: "#3396FF",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 5,
+            margin: 5,
+            borderRadius: 15,
+            width: 30,
+            height: 30,
+        },
+        imageLeft: {
+            width: 30,
+            height: 30,
+            marginRight: 2,
+        },
+        imageRight: {
+            width: 30,
+            height: 30,
+            marginLeft: 2,
         },
     });
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.button}>
-            <Text style={styles.text}>X</Text>
+            {previous ? (
+                <Image
+                    style={styles.imageLeft}
+                    source={require("@/assets/images/left.png")}
+                />
+            ) : (
+                <Image
+                    style={styles.imageRight}
+                    source={require("@/assets/images/right.png")}
+                />
+            )}
         </TouchableOpacity>
     );
 };

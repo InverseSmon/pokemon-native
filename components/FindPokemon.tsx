@@ -12,15 +12,100 @@ import {
     setText,
 } from "@/state/searchPokemonSlice";
 import { setView } from "@/state/viewSlice";
-import { FindButton } from "./StyledButton";
+import { NameNumberButton, GenButton } from "./StyledButton";
+
+const NameNumberTabs = () => {
+    const searchByName = useAppSelector((state) => state.search.searchByName);
+    const dispatch = useAppDispatch();
+
+    return (
+        <View style={styles.nameNumberButtons}>
+            <NameNumberButton
+                title="By Name"
+                onPress={() => {
+                    dispatch(setSearchByName(true));
+                    setNumber("");
+                }}
+                highlight={searchByName}
+            />
+            <NameNumberButton
+                title="By Number"
+                onPress={() => {
+                    dispatch(setSearchByName(false));
+                    setValue("");
+                }}
+                highlight={!searchByName}
+            />
+        </View>
+    );
+};
+
+const FindByName = () => {
+    const text = useAppSelector((state) => state.search.text);
+    const dispatch = useAppDispatch();
+
+    return (
+        <View style={styles.input}>
+            <TextInput
+                style={styles.textInput}
+                onChangeText={(text) => dispatch(setText(text))}
+                value={text}
+                onSubmitEditing={() => {
+                    dispatch(setValue(text.toLowerCase()));
+                    dispatch(setView("stats"));
+                }}
+            />
+            <Button
+                title="Find"
+                onPress={() => {
+                    dispatch(setValue(text.toLowerCase()));
+                    dispatch(setView("stats"));
+                }}
+            />
+        </View>
+    );
+};
+
+const FindByNumber = () => {
+    const number = useAppSelector((state) => state.search.number);
+    const dispatch = useAppDispatch();
+
+    const handleNumberChange = (text: string) => {
+        const cleanedValue = text.replace(/[^0-9]/g, "");
+
+        const parsedValue = parseInt(cleanedValue, 10);
+        if (parsedValue > 0 && parsedValue < 1026) {
+            dispatch(setNumber(parsedValue.toString()));
+        } else {
+            dispatch(setNumber(""));
+        }
+    };
+
+    return (
+        <View style={styles.input}>
+            <TextInput
+                keyboardType="numeric"
+                style={styles.textInput}
+                onChangeText={handleNumberChange}
+                value={number}
+                onSubmitEditing={() => {
+                    dispatch(setValue(number));
+                    dispatch(setView("stats"));
+                }}
+            />
+            <Button
+                title="Find"
+                onPress={() => {
+                    dispatch(setValue(number));
+                    dispatch(setView("stats"));
+                }}
+            />
+        </View>
+    );
+};
 
 export default function FindPokemon() {
     const searchByName = useAppSelector((state) => state.search.searchByName);
-    const text = useAppSelector((state) => state.search.text);
-    const number = useAppSelector((state) => state.search.number);
-
-    const data =
-        useAppSelector((state: RootState) => state.pokemon.pokemon) || "";
     const value = useAppSelector((state) => state.search.value);
     const dispatch = useAppDispatch();
 
@@ -41,88 +126,15 @@ export default function FindPokemon() {
             .catch((error) => console.error(error));
     }, [value, dispatch]);
 
-    const handleNumberChange = (text: string) => {
-        const cleanedValue = text.replace(/[^0-9]/g, "");
-
-        const parsedValue = parseInt(cleanedValue, 10);
-        if (parsedValue > 0 && parsedValue < 1026) {
-            dispatch(setNumber(parsedValue.toString()));
-        } else {
-            dispatch(setNumber(""));
-        }
-    };
-
     return (
         <>
+            <ThemedText style={styles.themedText}>Find Pokemon</ThemedText>
+
             <View style={styles.submitView}>
-                {searchByName ? (
-                    <View>
-                        <ThemedText type="subtitle">
-                            {" "}
-                            Input Pokemon Name
-                        </ThemedText>
-                        <View style={styles.input}>
-                            <TextInput
-                                style={styles.textInput}
-                                onChangeText={(text) => dispatch(setText(text))}
-                                value={text}
-                                onSubmitEditing={() => {
-                                    dispatch(setValue(text.toLowerCase()));
-                                    dispatch(setView("stats"));
-                                }}
-                            />
-                            <Button
-                                title="Find"
-                                onPress={() => {
-                                    dispatch(setValue(text.toLowerCase()));
-                                    dispatch(setView("stats"));
-                                }}
-                            />
-                        </View>
-                        <FindButton
-                            title="Choose by Number"
-                            onPress={() => {
-                                dispatch(setSearchByName(false));
-                                dispatch(setText(""));
-                            }}
-                            selected={searchByName}
-                        />
-                    </View>
-                ) : (
-                    <View>
-                        <ThemedText type="subtitle">
-                            {" "}
-                            Input Pokemon Number
-                        </ThemedText>
-                        <View style={styles.input}>
-                            <TextInput
-                                keyboardType="numeric"
-                                style={styles.textInput}
-                                onChangeText={handleNumberChange}
-                                value={number}
-                                onSubmitEditing={() => {
-                                    dispatch(setValue(number));
-                                    dispatch(setView("stats"));
-                                }}
-                            />
-                            <Button
-                                title="Find"
-                                onPress={() => {
-                                    dispatch(setValue(number));
-                                    dispatch(setView("stats"));
-                                }}
-                            />
-                        </View>
-                        <FindButton
-                            title="Choose by Name"
-                            onPress={() => {
-                                dispatch(setSearchByName(true));
-                                dispatch(setNumber(""));
-                            }}
-                            selected={!searchByName}
-                        />
-                    </View>
-                )}
+                <View>
+                    <NameNumberTabs />
+                    {searchByName ? <FindByName /> : <FindByNumber />}
+                </View>
             </View>
         </>
     );
@@ -148,13 +160,25 @@ const styles = StyleSheet.create({
     },
     textInput: {
         height: 40,
-        width: "80%",
+        width: 250,
         borderColor: "gray",
         borderWidth: 1,
+        marginRight: 5,
     },
     input: {
         flexDirection: "row",
-        justifyContent: "space-evenly",
+        justifyContent: "center",
         alignItems: "center",
+    },
+    nameNumberButtons: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        // marginTop: 5,
+    },
+    themedText: {
+        fontSize: 25,
+        fontWeight: "bold",
+        textAlign: "center",
+        borderBottomWidth: 1,
     },
 });

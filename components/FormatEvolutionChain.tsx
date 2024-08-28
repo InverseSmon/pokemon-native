@@ -176,7 +176,7 @@ export const FormatEvolutionChain: React.FC<{
                             pictureSize={100}
                         />
                         <Text style={styles.name}>
-                            {capitalizeFirstLetter(evolution.species.name)}
+                            {splitAndCapitalize(evolution.species.name)}
                         </Text>
                         {evolution.evolution_details[0] &&
                         evolution.evolution_details[0].trigger ? (

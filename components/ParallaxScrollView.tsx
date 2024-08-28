@@ -8,6 +8,9 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { ThemedView } from "@/components/ThemedView";
+import AddPokemonToTeam from "@/components/AddPokemonToTeam";
+import { useAppSelector } from "@/state/hooks";
+import { RootState } from "@/state/store";
 
 const HEADER_HEIGHT = 250;
 
@@ -26,6 +29,7 @@ export default function ParallaxScrollView({
     const colorScheme = useColorScheme() ?? "light";
     const scrollRef = useAnimatedRef<Animated.ScrollView>();
     const scrollOffset = useScrollViewOffset(scrollRef);
+    const data = useAppSelector((state: RootState) => state.pokemon.pokemon);
 
     const headerAnimatedStyle = useAnimatedStyle(() => {
         return {
@@ -65,6 +69,7 @@ export default function ParallaxScrollView({
                     {backgroundImage}
                     {headerImage}
                 </Animated.View>
+                {data ? <AddPokemonToTeam /> : null}
                 <ThemedView style={styles.content}>{children}</ThemedView>
             </Animated.ScrollView>
         </ThemedView>
@@ -74,6 +79,7 @@ export default function ParallaxScrollView({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        zIndex: -1,
     },
     header: {
         height: 220,
