@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "expo-router";
 import { TouchableOpacity, Text, StyleSheet, Image, View } from "react-native";
+import { useAppDispatch } from "@/state/hooks";
+import { addPokemon, PokemonData } from "@/state/pokemonSlice";
+import { useNavigation } from "@react-navigation/native";
+import { setNumber, setText } from "@/state/searchPokemonSlice";
 
 export const GenButton = ({
     onPress,
@@ -152,27 +156,41 @@ export const FindButton = ({
 };
 
 export const TeamButton = ({ title }: { title: string }) => {
+    const dispatch = useAppDispatch();
+    const navigation = useNavigation();
+
+    const onPress = () => {
+        dispatch(addPokemon(null as never));
+        navigation.navigate("pokemon" as never);
+        dispatch(setNumber(""));
+        dispatch(setText(""));
+    };
+
     const styles = StyleSheet.create({
         button: {
             backgroundColor: "white",
-            padding: 5,
+            // padding: 5,
             margin: 5,
             borderRadius: 5,
             width: "100%",
             height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
         },
-        text: {
-            textAlign: "center",
-            fontSize: 100,
-            color: "blue",
+        plus: {
+            width: "80%",
+            height: "80%",
+            // color: "blue",
+            backgroundColor: "transparent",
         },
     });
 
     return (
-        <TouchableOpacity style={styles.button}>
-            <Link style={styles.text} href="/pokemon">
-                {title}
-            </Link>
+        <TouchableOpacity style={styles.button} onPress={onPress}>
+            <Image
+                source={require("@/assets/images/add.png")}
+                style={styles.plus}
+            />
         </TouchableOpacity>
     );
 };

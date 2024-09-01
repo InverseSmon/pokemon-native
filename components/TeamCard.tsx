@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, Linking, Button, StyleSheet } from "react-native";
 import { TeamButton, RemovePokemonFromTeamButton } from "./StyledButton";
 import { GetPokemonPicture } from "./GetPictures";
 import { splitAndCapitalize } from "./PokemonInfo";
 import { useAppDispatch } from "@/state/hooks";
-import { removePlayer } from "@/state/teamSlice";
+import { removePlayer, setModalView, setModalPokemon } from "@/state/teamSlice";
+import { addPokemon } from "@/state/pokemonSlice";
 
 interface TeamMemberCardProps {
     pokemon: string;
@@ -21,6 +22,25 @@ export const TeamMemberCard = ({
         dispatch(removePlayer(teamPosition));
     };
 
+    const [value, setValue] = useState<string>("");
+
+    useEffect(() => {
+        if (!value) return;
+
+        const url = "https://pokeapi.co/api/v2/pokemon/" + value;
+        fetch(url)
+            .then((response) => {
+                if (!response.ok) {
+                    return;
+                }
+                return response.json();
+            })
+            .then((json) => {
+                dispatch(addPokemon(json));
+            })
+            .catch((error) => console.error(error));
+    }, [value, dispatch]);
+
     return (
         <View style={styles.card}>
             <GetPokemonPicture name={pokemon} pictureSize={120} />
@@ -28,6 +48,15 @@ export const TeamMemberCard = ({
             <View style={styles.remove}>
                 <RemovePokemonFromTeamButton onPress={onPress} />
             </View>
+            <Button
+                title="View"
+                onPress={() => {
+                    dispatch(setModalView(true));
+                    dispatch(setModalPokemon(pokemon));
+                    setValue(pokemon);
+                    console.log("Viewing " + pokemon);
+                }}
+            />
         </View>
     );
 };

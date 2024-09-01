@@ -20,7 +20,7 @@ function AddPokemonToTeam() {
                 if (pokemon) {
                     dispatch(addPlayer(pokemon.name));
                     console.log("Added " + pokemon.name + " to team");
-                    navigation.navigate("team");
+                    navigation.navigate("team" as never);
                 }
             }
         } catch (error) {
@@ -28,7 +28,7 @@ function AddPokemonToTeam() {
         }
     };
 
-    return <AddPokemonToTeamButton onPress={onPress} title={"+"} />;
+    return <AddPokemonToTeamButton onPress={onPress} />;
 }
 
 export default AddPokemonToTeam;

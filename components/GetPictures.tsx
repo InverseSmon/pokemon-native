@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
-import { useAppDispatch } from "@/state/hooks";
+import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import { addPokemon } from "@/state/pokemonSlice";
 import { setView } from "@/state/viewSlice";
+import { RootState } from "@/state/store";
 
 type GetPokemonPictureProps = {
     name: string;

@@ -24,7 +24,7 @@ const NameNumberTabs = () => {
                 title="By Name"
                 onPress={() => {
                     dispatch(setSearchByName(true));
-                    setNumber("");
+                    dispatch(setNumber(""));
                 }}
                 highlight={searchByName}
             />
@@ -32,7 +32,7 @@ const NameNumberTabs = () => {
                 title="By Number"
                 onPress={() => {
                     dispatch(setSearchByName(false));
-                    setValue("");
+                    dispatch(setText(""));
                 }}
                 highlight={!searchByName}
             />

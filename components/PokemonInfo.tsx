@@ -5,7 +5,7 @@ import PokemonStats from "@/components/PokemonStats";
 import { PreviousNextButton } from "@/components/StyledButton";
 import { PokemonData, addPokemon } from "@/state/pokemonSlice";
 import { setView } from "@/state/viewSlice";
-
+import { setNumber, setText } from "@/state/searchPokemonSlice";
 import { useAppDispatch } from "@/state/hooks";
 import { useState, useEffect } from "react";
 
@@ -28,7 +28,7 @@ export function splitAndCapitalize(string: string) {
         .join(" ");
 }
 
-function PokemonNameTypes({ data }: { data: PokemonData }) {
+export function PokemonNameTypes({ data }: { data: PokemonData }) {
     return (
         <View style={styles.nameTypes}>
             <ThemedText type="subtitle" style={styles.name}>
@@ -70,6 +70,8 @@ export function NameTypesWithControls({ data }: { data: PokemonData }) {
             ? console.log("Invalid number")
             : setValue(newId);
         dispatch(setView("stats"));
+        dispatch(setNumber(""));
+        dispatch(setText(""));
     };
 
     return (
