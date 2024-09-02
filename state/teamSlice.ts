@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PokemonData } from "./pokemonSlice";
 
 interface TeamState {
-    team: string[];
-    modalPokemon: string;
+    team: PokemonData[];
+    modalPokemon: PokemonData | null;
     modalView: boolean;
 }
 
 const initialState: TeamState = {
     team: [],
-    modalPokemon: "",
+    modalPokemon: null,
     modalView: false,
 };
 
@@ -16,7 +17,7 @@ export const teamSlice = createSlice({
     name: "team",
     initialState,
     reducers: {
-        addPlayer: (state, action: PayloadAction<string>) => {
+        addPlayer: (state, action: PayloadAction<PokemonData>) => {
             state.team.push(action.payload);
         },
         removePlayer: (state, action: PayloadAction<number>) => {
@@ -25,7 +26,7 @@ export const teamSlice = createSlice({
         setModalView: (state, action: PayloadAction<boolean>) => {
             state.modalView = action.payload;
         },
-        setModalPokemon: (state, action: PayloadAction<string>) => {
+        setModalPokemon: (state, action: PayloadAction<PokemonData>) => {
             state.modalPokemon = action.payload;
         },
     },

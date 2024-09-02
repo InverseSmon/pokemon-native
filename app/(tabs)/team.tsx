@@ -7,6 +7,7 @@ import {
 } from "@/components/TeamCard";
 import { useAppSelector, useAppDispatch } from "@/state/hooks";
 import { MemberModal } from "@/components/MemberModal";
+import { PokemonData } from "@/state/pokemonSlice";
 
 export default function TeamScreen() {
     const teamLength = useAppSelector((state) => state.team.team.length);
@@ -20,7 +21,7 @@ export default function TeamScreen() {
             </ThemedText>
             <View style={styles.container}>
                 {teamLength > 0
-                    ? team.map((pokemon: string, index: number) => (
+                    ? team.map((pokemon: PokemonData, index: number) => (
                           <TeamMemberCard
                               pokemon={pokemon}
                               teamPosition={index}
@@ -34,7 +35,7 @@ export default function TeamScreen() {
                       ))
                     : null}
             </View>
-            <MemberModal name={modalPokemon} />
+            {modalPokemon ? <MemberModal pokemon={modalPokemon} /> : null}
         </>
     );
 }

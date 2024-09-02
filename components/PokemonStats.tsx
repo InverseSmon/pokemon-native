@@ -84,6 +84,7 @@ export default function PokemonStats({ name }: { name: string }) {
 
 const styles = StyleSheet.create({
     stats: {
+        marginTop: 10,
         marginLeft: 10,
     },
     statContainer: {
@@ -99,23 +100,23 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     barDarkGreen: {
-        height: 25,
+        height: 20,
         backgroundColor: "#1BC22F",
     },
     barGreen: {
-        height: 25,
+        height: 20,
         backgroundColor: "#8DFF0A",
     },
     barYellow: {
-        height: 25,
+        height: 20,
         backgroundColor: "#FAD73C",
     },
     barOrange: {
-        height: 25,
+        height: 20,
         backgroundColor: "#F19143",
     },
     barRed: {
-        height: 25,
+        height: 20,
         backgroundColor: "#F55536",
     },
     statsText: {

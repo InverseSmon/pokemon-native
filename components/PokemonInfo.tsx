@@ -8,6 +8,7 @@ import { setView } from "@/state/viewSlice";
 import { setNumber, setText } from "@/state/searchPokemonSlice";
 import { useAppDispatch } from "@/state/hooks";
 import { useState, useEffect } from "react";
+import { GetAbilities } from "./GetAbilities";
 
 function heightToMeters(height: number) {
     return height / 10;
@@ -101,6 +102,7 @@ export function PokemonHeightWeight({ data }: { data: any }) {
 export default function PokemonInfo({ data }: { data: any }) {
     return (
         <>
+            <GetAbilities pokemon={data} />
             <PokemonHeightWeight data={data} />
             <PokemonStats name={data?.name} />
         </>
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-evenly",
         textAlign: "center",
-        marginBottom: 20,
+        marginBottom: 0,
     },
     name: {
         fontSize: 30,

@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
     views: {
         flexDirection: "row",
         justifyContent: "space-around",
-        marginBottom: 10,
+        // marginBottom: 10,
     },
 });

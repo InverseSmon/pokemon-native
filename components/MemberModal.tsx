@@ -5,15 +5,17 @@ import { setModalView } from "@/state/teamSlice";
 import { GetPokemonPicture } from "./GetPictures";
 import { PokemonNameTypes } from "./PokemonInfo";
 import { splitAndCapitalize } from "./PokemonInfo";
+import { GetAbilities } from "./GetAbilities";
+import { PokemonData } from "@/state/pokemonSlice";
+import Moves from "@/components/MovesView";
 
 interface MemberModalProps {
-    name: string;
+    pokemon: PokemonData;
 }
 
-export const MemberModal = ({ name }: MemberModalProps) => {
+export const MemberModal = ({ pokemon }: MemberModalProps) => {
     const dispatch = useAppDispatch();
     const modalVisible = useAppSelector((state) => state.team.modalView);
-    const pokemon = useAppSelector((state) => state.pokemon.pokemon);
 
     return (
         <Modal
@@ -25,13 +27,10 @@ export const MemberModal = ({ name }: MemberModalProps) => {
             }}
         >
             <View style={styles.container}>
-                <GetPokemonPicture name={name} pictureSize={220} />
+                <GetPokemonPicture pokemon={pokemon} pictureSize={220} />
                 {pokemon ? <PokemonNameTypes data={pokemon} /> : null}
-                {pokemon?.abilities.map((ability) => (
-                    <Text key={ability.ability.name}>
-                        {splitAndCapitalize(ability.ability.name)}
-                    </Text>
-                ))}
+                <GetAbilities pokemon={pokemon} />
+                {/* <Moves data={pokemon.moves} id={pokemon.id} /> */}
                 <Button
                     title="Close"
                     onPress={() => {
@@ -50,6 +49,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "center",
         paddingTop: 60,
+        padding: 10,
     },
     nameTitle: {
         fontSize: 35,

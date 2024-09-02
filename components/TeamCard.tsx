@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Linking, Button, StyleSheet } from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { TeamButton, RemovePokemonFromTeamButton } from "./StyledButton";
 import { GetPokemonPicture } from "./GetPictures";
 import { splitAndCapitalize } from "./PokemonInfo";
 import { useAppDispatch } from "@/state/hooks";
 import { removePlayer, setModalView, setModalPokemon } from "@/state/teamSlice";
-import { addPokemon } from "@/state/pokemonSlice";
+import { addPokemon, PokemonData } from "@/state/pokemonSlice";
 
 interface TeamMemberCardProps {
-    pokemon: string;
+    pokemon: PokemonData;
     teamPosition: number;
 }
 
@@ -18,10 +18,11 @@ export const TeamMemberCard = ({
 }: TeamMemberCardProps) => {
     const dispatch = useAppDispatch();
     const onPress = () => {
-        console.log("Removed " + pokemon + " from team");
+        console.log("Removed " + pokemon.name + " from team");
         dispatch(removePlayer(teamPosition));
     };
 
+    const [pressed, setPressed] = useState<boolean>(false);
     const [value, setValue] = useState<string>("");
 
     useEffect(() => {
@@ -37,27 +38,31 @@ export const TeamMemberCard = ({
             })
             .then((json) => {
                 dispatch(addPokemon(json));
+                setPressed(false);
             })
             .catch((error) => console.error(error));
-    }, [value, dispatch]);
+    }, [value, dispatch, pressed]);
+
+    const onPressView = () => {
+        // setValue(pokemon);
+        dispatch(setModalView(true));
+        dispatch(setModalPokemon(pokemon));
+        setPressed(true);
+        console.log("Viewing " + value);
+    };
 
     return (
-        <View style={styles.card}>
-            <GetPokemonPicture name={pokemon} pictureSize={120} />
-            <Text>{splitAndCapitalize(pokemon)}</Text>
+        <TouchableOpacity style={styles.card} onPress={onPressView}>
+            <GetPokemonPicture
+                pokemon={pokemon}
+                pictureSize={120}
+                specifiedOnPress={onPressView}
+            />
+            <Text>{splitAndCapitalize(pokemon.name)}</Text>
             <View style={styles.remove}>
                 <RemovePokemonFromTeamButton onPress={onPress} />
             </View>
-            <Button
-                title="View"
-                onPress={() => {
-                    dispatch(setModalView(true));
-                    dispatch(setModalPokemon(pokemon));
-                    setValue(pokemon);
-                    console.log("Viewing " + pokemon);
-                }}
-            />
-        </View>
+        </TouchableOpacity>
     );
 };
 

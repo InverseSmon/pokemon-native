@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { EvolutionChain } from "@/state/evolutionSlice";
 import { GetPokemonPicture } from "./GetPictures";
 import { capitalizeFirstLetter, splitAndCapitalize } from "./PokemonInfo";
+import { PokemonData, addPokemon } from "@/state/pokemonSlice";
+import { setView } from "@/state/viewSlice";
+import { setNumber, setText } from "@/state/searchPokemonSlice";
+import { useAppDispatch } from "@/state/hooks";
 
 type Evolution = {
     species: {
@@ -163,40 +167,155 @@ const EvolutionDetails: React.FC<{ evolution: Evolution }> = ({
     );
 };
 
+const EvolutionComponent: React.FC<{ evolution: Evolution }> = ({
+    evolution,
+}) => {
+    const [pokemon, setPokemon] = useState<PokemonData>();
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (!evolution.species) return;
+
+        const url =
+            "https://pokeapi.co/api/v2/pokemon/" + evolution.species.name;
+        fetch(url)
+            .then((response) => {
+                if (!response.ok) {
+                    return;
+                }
+                return response.json();
+            })
+            .then((json) => {
+                setPokemon(json);
+            })
+            .catch((error) => console.error(error));
+    }, [evolution.species]);
+
+    const onPress = () => {
+        if (pokemon) {
+            dispatch(addPokemon(pokemon));
+            dispatch(setView("stats"));
+            dispatch(setNumber(""));
+            dispatch(setText(""));
+        }
+    };
+
+    return (
+        <View style={styles.evolutionChain}>
+            {evolution.species ? (
+                <View style={styles.pokemon}>
+                    {pokemon ? (
+                        <GetPokemonPicture
+                            pokemon={pokemon}
+                            pictureSize={100}
+                            specifiedOnPress={onPress}
+                        />
+                    ) : (
+                        <Text>No Picture</Text>
+                    )}
+
+                    <Text style={styles.name}>
+                        {splitAndCapitalize(evolution.species.name)}
+                    </Text>
+                    {evolution.evolution_details[0] &&
+                    evolution.evolution_details[0].trigger ? (
+                        <EvolutionDetails evolution={evolution} />
+                    ) : null}
+                </View>
+            ) : null}
+            {evolution.evolves_to && evolution.evolves_to.length > 0 && (
+                <View style={styles.evolution}>
+                    {evolution.evolves_to.map((nextEvolution: Evolution) => (
+                        <EvolutionComponent evolution={nextEvolution} />
+                    ))}
+                </View>
+            )}
+        </View>
+    );
+};
+
 export const FormatEvolutionChain: React.FC<{
     evolutionChain: EvolutionChain;
 }> = ({ evolutionChain }) => {
-    const renderEvolution = (evolution: Evolution): JSX.Element => {
-        return (
-            <View style={styles.evolutionChain}>
-                {evolution.species ? (
-                    <View style={styles.pokemon}>
-                        <GetPokemonPicture
-                            name={evolution.species.name}
-                            pictureSize={100}
-                        />
-                        <Text style={styles.name}>
-                            {splitAndCapitalize(evolution.species.name)}
-                        </Text>
-                        {evolution.evolution_details[0] &&
-                        evolution.evolution_details[0].trigger ? (
-                            <EvolutionDetails evolution={evolution} />
-                        ) : null}
-                    </View>
-                ) : null}
-                {evolution.evolves_to && evolution.evolves_to.length > 0 && (
-                    <View style={styles.evolution}>
-                        {evolution.evolves_to.map((nextEvolution: Evolution) =>
-                            renderEvolution(nextEvolution)
-                        )}
-                    </View>
-                )}
-            </View>
-        );
-    };
-
-    return <>{evolutionChain ? renderEvolution(evolutionChain.chain) : null}</>;
+    return (
+        <>
+            {evolutionChain ? (
+                <EvolutionComponent evolution={evolutionChain.chain} />
+            ) : null}
+        </>
+    );
 };
+
+// export const FormatEvolutionChain: React.FC<{
+//     evolutionChain: EvolutionChain;
+// }> = ({ evolutionChain }) => {
+//     const renderEvolution = (evolution: Evolution): JSX.Element => {
+//         const [pokemon, setPokemon] = useState<PokemonData>();
+
+//         useEffect(() => {
+//             if (!evolution.species) return;
+
+//             const url =
+//                 "https://pokeapi.co/api/v2/pokemon/" + evolution.species.name;
+//             fetch(url)
+//                 .then((response) => {
+//                     if (!response.ok) {
+//                         return;
+//                     }
+//                     return response.json();
+//                 })
+//                 .then((json) => {
+//                     setPokemon(json);
+//                 })
+//                 .catch((error) => console.error(error));
+//         }, [evolution.species]);
+
+//         const dispatch = useAppDispatch();
+//         const onPress = () => {
+//             if (pokemon) {
+//                 dispatch(addPokemon(pokemon));
+//                 dispatch(setView("stats"));
+//                 dispatch(setNumber(""));
+//                 dispatch(setText(""));
+//             }
+//         };
+
+//         return (
+//             <View style={styles.evolutionChain}>
+//                 {evolution.species ? (
+//                     <View style={styles.pokemon}>
+//                         {pokemon ? (
+//                             <GetPokemonPicture
+//                                 pokemon={pokemon}
+//                                 pictureSize={100}
+//                                 specifiedOnPress={onPress}
+//                             />
+//                         ) : (
+//                             <Text>No Picture</Text>
+//                         )}
+
+//                         <Text style={styles.name}>
+//                             {splitAndCapitalize(evolution.species.name)}
+//                         </Text>
+//                         {evolution.evolution_details[0] &&
+//                         evolution.evolution_details[0].trigger ? (
+//                             <EvolutionDetails evolution={evolution} />
+//                         ) : null}
+//                     </View>
+//                 ) : null}
+//                 {evolution.evolves_to && evolution.evolves_to.length > 0 && (
+//                     <View style={styles.evolution}>
+//                         {evolution.evolves_to.map((nextEvolution: Evolution) =>
+//                             renderEvolution(nextEvolution)
+//                         )}
+//                     </View>
+//                 )}
+//             </View>
+//         );
+//     };
+
+//     return <>{evolutionChain ? renderEvolution(evolutionChain.chain) : null}</>;
+// };
 
 const styles = StyleSheet.create({
     evolutionChain: {

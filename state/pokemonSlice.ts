@@ -10,6 +10,7 @@ export type PokemonData = {
         ability: {
             name: string;
         };
+        is_hidden: boolean;
     }[];
     moves: PokemonMove[];
     species: {

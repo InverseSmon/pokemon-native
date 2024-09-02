@@ -18,7 +18,7 @@ function AddPokemonToTeam() {
                 throw new Error("Team is full!");
             } else {
                 if (pokemon) {
-                    dispatch(addPlayer(pokemon.name));
+                    dispatch(addPlayer(pokemon));
                     console.log("Added " + pokemon.name + " to team");
                     navigation.navigate("team" as never);
                 }
