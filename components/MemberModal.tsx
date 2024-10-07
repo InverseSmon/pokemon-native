@@ -8,14 +8,24 @@ import { splitAndCapitalize } from "./PokemonInfo";
 import { GetAbilities } from "./GetAbilities";
 import { PokemonData } from "@/state/pokemonSlice";
 import Moves from "@/components/MovesView";
+import { AbilitiesDropdown, GenerationDropdown } from "./ModalDropdowns";
+import { ModalMoves } from "./ModalMoves";
 
 interface MemberModalProps {
     pokemon: PokemonData;
 }
 
+const dummyMoves = {
+    move1: "move1",
+    move2: "move2",
+    move3: "move3",
+    move4: "move4",
+};
+
 export const MemberModal = ({ pokemon }: MemberModalProps) => {
     const dispatch = useAppDispatch();
     const modalVisible = useAppSelector((state) => state.team.modalView);
+    const dataList = useAppSelector((state) => state.team.teamMemberDataList);
 
     return (
         <Modal
@@ -28,9 +38,13 @@ export const MemberModal = ({ pokemon }: MemberModalProps) => {
         >
             <View style={styles.container}>
                 <GetPokemonPicture pokemon={pokemon} pictureSize={220} />
+
                 {pokemon ? <PokemonNameTypes data={pokemon} /> : null}
-                <GetAbilities pokemon={pokemon} />
-                {/* <Moves data={pokemon.moves} id={pokemon.id} /> */}
+                <GenerationDropdown />
+                <AbilitiesDropdown abilities={pokemon.abilities} />
+                <ModalMoves
+                    moveset={dataList ? dataList[0].moves : dummyMoves}
+                />
                 <Button
                     title="Close"
                     onPress={() => {

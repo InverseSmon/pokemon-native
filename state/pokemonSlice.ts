@@ -18,6 +18,7 @@ export type PokemonData = {
     };
     sprites: {
         front_default: string;
+        front_shiny: string;
     };
     types: {
         0: {

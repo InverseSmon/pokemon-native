@@ -5,6 +5,7 @@ import { GenerationDropdown } from "@/components/GenerationButtons";
 import VersionMoves, { populateMovesLists } from "@/components/MovesSort";
 import { useAppDispatch } from "@/state/hooks";
 import { setGeneration, setVersion, setLearnMethod } from "@/state/moveSlice";
+
 export type PokemonMove = {
     move: {
         name: string;

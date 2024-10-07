@@ -5,6 +5,7 @@ import movesReducer from "./moveSlice";
 import viewReducer from "./viewSlice";
 import evolutionReducer from "./evolutionSlice";
 import teamReducer from "./teamSlice";
+import pokedexReducer from "./pokedexSlice";
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         movesView: movesReducer,
         evolution: evolutionReducer,
         team: teamReducer,
+        pokedex: pokedexReducer,
     },
 });
 

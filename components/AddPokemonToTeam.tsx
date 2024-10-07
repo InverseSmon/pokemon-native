@@ -3,7 +3,7 @@ import { Text, View, Linking, Button, StyleSheet } from "react-native";
 import { AddPokemonToTeamButton } from "./StyledButton";
 import { useAppSelector, useAppDispatch } from "@/state/hooks";
 import { RootState } from "@/state/store";
-import { addPlayer } from "@/state/teamSlice";
+import { addPlayer, addTeamMemberData } from "@/state/teamSlice";
 import { useNavigation } from "@react-navigation/native";
 
 function AddPokemonToTeam() {
@@ -19,6 +19,17 @@ function AddPokemonToTeam() {
             } else {
                 if (pokemon) {
                     dispatch(addPlayer(pokemon));
+                    dispatch(
+                        addTeamMemberData({
+                            ability: "",
+                            moves: {
+                                move1: "",
+                                move2: "",
+                                move3: "",
+                                move4: "",
+                            },
+                        })
+                    );
                     console.log("Added " + pokemon.name + " to team");
                     navigation.navigate("team" as never);
                 }

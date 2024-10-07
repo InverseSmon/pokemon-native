@@ -4,7 +4,10 @@ import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import { StyleSheet, Text, View } from "react-native";
 import { GenButton } from "@/components/StyledButton";
 import { setGeneration, setVersion, setLearnMethod } from "@/state/moveSlice";
-import DropDownPicker from "react-native-dropdown-picker";
+import {
+    setGeneration as setPokedexGeneration,
+    selectGeneration,
+} from "@/state/pokedexSlice";
 import { Dropdown } from "react-native-element-dropdown";
 
 const VersionDropdown = () => {
@@ -194,6 +197,98 @@ export const GenerationDropdown: React.FC = () => {
     );
 };
 
+export const PokedexDropdown: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const currentGeneration = useAppSelector(
+        (state: RootState) => state.pokedex.currentGeneration
+    );
+
+    const [value, setValue] = useState<string>("");
+    const [array, setArray] = useState<number[]>([]);
+
+    const renderLabel = () => {
+        return <Text style={[styles.label]}>Generation</Text>;
+    };
+
+    const values = [
+        {
+            label: "Generation 1",
+            value: "gen1",
+            array: Array.from({ length: 151 }, (_, i) => i + 1),
+        },
+        {
+            label: "Generation 2",
+            value: "gen2",
+            array: Array.from({ length: 252 - 152 }, (_, i) => i + 152),
+        },
+        {
+            label: "Generation  3",
+            value: "gen3",
+            array: Array.from({ length: 387 - 252 }, (_, i) => i + 252),
+        },
+        {
+            label: "Generation  4",
+            value: "gen4",
+            array: Array.from({ length: 494 - 387 }, (_, i) => i + 387),
+        },
+        {
+            label: "Generation  5",
+            value: "gen5",
+            array: Array.from({ length: 650 - 494 }, (_, i) => i + 494),
+        },
+        {
+            label: "Generation  6",
+            value: "gen6",
+            array: Array.from({ length: 722 - 650 }, (_, i) => i + 650),
+        },
+        {
+            label: "Generation  7",
+            value: "gen7",
+            array: Array.from({ length: 810 - 722 }, (_, i) => i + 722),
+        },
+        {
+            label: "Generation  8",
+            value: "gen8",
+            array: Array.from({ length: 906 - 810 }, (_, i) => i + 810),
+        },
+        {
+            label: "Generation  9",
+            value: "gen9",
+            array: Array.from({ length: 1026 - 906 }, (_, i) => i + 906),
+        },
+        {
+            label: "All Generations",
+            value: "all",
+            array: Array.from({ length: 1025 }, (_, i) => i + 1),
+        },
+    ];
+
+    useEffect(() => {
+        if (value !== "") {
+            dispatch(setPokedexGeneration(array));
+            //console.log(currentGeneration, value);
+        }
+    }, [value]);
+
+    return (
+        <View style={styles.dropdownView}>
+            {renderLabel()}
+            <Dropdown
+                style={[styles.pokedexDropdownPicker]}
+                value={value}
+                data={values}
+                labelField={"label"}
+                valueField={"value"}
+                onChange={(item) => {
+                    setValue(item.label);
+                    setArray(item.array);
+                }}
+                placeholder={value}
+            />
+        </View>
+    );
+};
+
 const styles = StyleSheet.create({
     dropdownList: {
         flex: 1,
@@ -210,6 +305,14 @@ const styles = StyleSheet.create({
     },
     versionDropdownPicker: {
         width: "60%",
+        borderWidth: 1,
+        borderColor: "navy",
+        borderRadius: 4,
+        height: 50,
+        padding: 5,
+    },
+    pokedexDropdownPicker: {
+        width: "90%",
         borderWidth: 1,
         borderColor: "navy",
         borderRadius: 4,

@@ -3,6 +3,7 @@ import React from "react";
 import {
     TabBarIcon,
     PokemonTabBarIcon,
+    SearchTabBarIcon,
 } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -21,21 +22,18 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: "Home",
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon
-                            name={focused ? "home" : "home-outline"}
-                            color={color}
-                        />
+                    title: "Pokedex",
+                    tabBarIcon: ({ color }) => (
+                        <PokemonTabBarIcon name={"pokeball"} color={color} />
                     ),
                 }}
             />
             <Tabs.Screen
                 name="pokemon"
                 options={{
-                    title: "Pokemon",
-                    tabBarIcon: ({ color, focused }) => (
-                        <PokemonTabBarIcon name={"pokeball"} color={color} />
+                    title: "Find Pokemon",
+                    tabBarIcon: ({ color }) => (
+                        <SearchTabBarIcon name={"search1"} color={color} />
                     ),
                 }}
             />
@@ -43,7 +41,7 @@ export default function TabLayout() {
                 name="team"
                 options={{
                     title: "Team Builder",
-                    tabBarIcon: ({ color, focused }) => (
+                    tabBarIcon: ({ color }) => (
                         <TabBarIcon name={"grid-outline"} color={color} />
                     ),
                 }}

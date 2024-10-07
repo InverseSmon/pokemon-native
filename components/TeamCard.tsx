@@ -4,7 +4,12 @@ import { TeamButton, RemovePokemonFromTeamButton } from "./StyledButton";
 import { GetPokemonPicture } from "./GetPictures";
 import { splitAndCapitalize } from "./PokemonInfo";
 import { useAppDispatch } from "@/state/hooks";
-import { removePlayer, setModalView, setModalPokemon } from "@/state/teamSlice";
+import {
+    removePlayer,
+    removeTeamMemberData,
+    setModalView,
+    setModalPokemon,
+} from "@/state/teamSlice";
 import { addPokemon, PokemonData } from "@/state/pokemonSlice";
 
 interface TeamMemberCardProps {
@@ -20,6 +25,7 @@ export const TeamMemberCard = ({
     const onPress = () => {
         console.log("Removed " + pokemon.name + " from team");
         dispatch(removePlayer(teamPosition));
+        dispatch(removeTeamMemberData(teamPosition));
     };
 
     const [pressed, setPressed] = useState<boolean>(false);
@@ -44,11 +50,9 @@ export const TeamMemberCard = ({
     }, [value, dispatch, pressed]);
 
     const onPressView = () => {
-        // setValue(pokemon);
         dispatch(setModalView(true));
         dispatch(setModalPokemon(pokemon));
         setPressed(true);
-        console.log("Viewing " + value);
     };
 
     return (

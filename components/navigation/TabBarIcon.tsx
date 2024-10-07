@@ -2,6 +2,7 @@
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { type IconProps } from "@expo/vector-icons/build/createIconSet";
 import { type ComponentProps } from "react";
 
@@ -24,5 +25,14 @@ export function PokemonTabBarIcon({
             style={[{ marginBottom: -3 }, style]}
             {...rest}
         />
+    );
+}
+
+export function SearchTabBarIcon({
+    style,
+    ...rest
+}: IconProps<ComponentProps<typeof AntDesign>["name"]>) {
+    return (
+        <AntDesign size={28} style={[{ marginBottom: -3 }, style]} {...rest} />
     );
 }
